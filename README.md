@@ -1,5 +1,7 @@
 # opencode-plugins
 
+This isnt ready yet, plz know you are trying this at your own risk. Some of these depend on each other and that isn't made clear or cleanly cut either, working on that.
+
 OpenCode 2 server plugins built from Quest Giver. Source is maintained privately;
 this repository publishes a built copy of each package at every tag.
 
