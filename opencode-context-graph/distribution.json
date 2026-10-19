@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "context-graph/context-graph.ts",
+      "sha256": "1491c047320e8062bc265c545873b10f4cfe4c0f1bf41857de5d272bc240b138"
+    },
+    {
+      "path": "context-graph/execute-attribution.ts",
+      "sha256": "15eae2d561eab95f5eff4bc6eae019de724bbdd0d708b551a5d4e648a65593ed"
+    },
+    {
+      "path": "context-graph/execute-timing.ts",
+      "sha256": "5cef352d09ed3a515b55e87f24761b198ab91ab3bbef340888b07fe1afd6d9f5"
+    },
+    {
+      "path": "context-graph/server.ts",
+      "sha256": "3c5c898fa0c48a930d65a4f871a8727adde140b6fbcc2fa2dc0f9629a04bede3"
+    }
+  ],
+  "policy": "Relative dependencies are vendored from this source revision; no sibling checkout is required."
+}

@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "name": "opencode-project-router",
+  "description": "On-demand project discovery and destination-bound conversational routing",
+  "server": "project-router/server.ts",
+  "assets": []
+}

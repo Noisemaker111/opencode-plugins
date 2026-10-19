@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "name": "opencode-context-graph",
+  "description": "Live session token and Code Mode attribution for server consumers",
+  "server": "context-graph/server.ts",
+  "assets": [
+    "context-graph/context-graph.ts",
+    "context-graph/execute-attribution.ts",
+    "context-graph/execute-timing.ts"
+  ]
+}

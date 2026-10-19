@@ -1,0 +1,17 @@
+{
+  "name": "opencode-project-router",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "On-demand project discovery and destination-bound conversational routing",
+  "license": "MIT",
+  "exports": {
+    ".": "./project-router/server.ts"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "1.18.23",
+    "effect": "4.0.5",
+    "json5": "2.2.3",
+    "gpt-tokenizer": "4.0.0"
+  }
+}

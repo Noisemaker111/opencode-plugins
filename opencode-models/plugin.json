@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "name": "opencode-models",
+  "description": "Model routing, account policy and configured transport guards",
+  "server": "models/server.ts",
+  "assets": [
+    "models/model-profiles.json",
+    "models/allowance-plans.json",
+    "models/dispatch-policy.json"
+  ]
+}

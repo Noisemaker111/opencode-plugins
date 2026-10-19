@@ -1,0 +1,21 @@
+{
+  "name": "opencode-usage",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Typed subscription usage, telemetry, and quota-aware routing APIs",
+  "license": "MIT",
+  "exports": {
+    ".": "./usage/server.ts"
+  },
+  "bin": {
+    "usage": "usage/cli.ts"
+  },
+  "dependencies": {
+    "json5": "2.2.3",
+    "effect": "4.0.5",
+    "gpt-tokenizer": "4.0.0",
+    "@opencode-ai/plugin": "1.18.23",
+    "@modelcontextprotocol/sdk": "1.30.0"
+  }
+}

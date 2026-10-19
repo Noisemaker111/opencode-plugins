@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "name": "opencode-cliproxyapi",
+  "description": "Keeps the local CLIProxyAPI subscription broker running from its verified config",
+  "server": "cliproxyapi/server.ts",
+  "assets": []
+}

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "agent-guard/server.ts",
+      "sha256": "7e6f1345646bf8732d6a0c52e3e37442d50e4085f7a6ce426dc25880f9626d67"
+    },
+    {
+      "path": "quest/permissions/shell-guidance.ts",
+      "sha256": "433bfbe50ce58d785143682eb96cb662378f2f79c8c625a844a03e82d64c807d"
+    },
+    {
+      "path": "setup/files/.config/opencode-normal/search-output/index.js",
+      "sha256": "91a9a965d4134734294ce8d2705188065d049168b345e8f69a16b347ddedf4f4"
+    }
+  ],
+  "policy": "Relative dependencies are vendored from this source revision; no sibling checkout is required."
+}

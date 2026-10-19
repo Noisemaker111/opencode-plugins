@@ -1,0 +1,17 @@
+{
+  "name": "opencode-models",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Model routing, account policy and configured transport guards",
+  "license": "MIT",
+  "exports": {
+    ".": "./models/server.ts"
+  },
+  "dependencies": {
+    "effect": "4.0.5",
+    "json5": "2.2.3",
+    "gpt-tokenizer": "4.0.0",
+    "@opencode-ai/plugin": "1.18.23"
+  }
+}

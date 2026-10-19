@@ -1,0 +1,289 @@
+{
+  "version": 1,
+  "name": "OpenCode Go plan allowance table (value per subscription dollar)",
+  "provider": "opencode-go",
+  "unit": "multiplier = monthly usage limit in USD / plan price in USD, on the same plan. DeepSeek V4.1 Flash at $160 a month on a $40 plan is 4x; Haiku 5.5 at $15 on the $10 plan is 1.5x",
+  "windows": {
+    "rolling": 0.2,
+    "weekly": 0.5,
+    "monthly": 1
+  },
+  "windowsSource": "vendor page rule: the 5-hour limit is 20% of the monthly limit and the weekly limit is 50% (read 2026-10-12)",
+  "plans": {
+    "go": {
+      "name": "OpenCode Go",
+      "priceUSD": 10,
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12); matches Jon's earlier $10 figures (DeepSeek ~$80, Haiku ~$15)"
+    },
+    "go-plus": {
+      "name": "OpenCode Go Plus",
+      "priceUSD": 40,
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12); matches Jon's 2026-10-12 figure (DeepSeek ~$160 on $40)"
+    }
+  },
+  "accounts": {
+    "opencode-go-d9f819e2b95cc656f794": {
+      "plan": "go-plus",
+      "source": "from Jon, 2026-10-12: he is on the $40 plan"
+    }
+  },
+  "notes": "The Usage plan-capacity report (2026-09-21) predates the $40 change; its measured Go windows (kimi-k3 monthly about $13) fit the $10 plan. Measured per-model rates (priceRatioTest) still outrank this table in models/allowance-cost.ts.",
+  "subscriptions": {
+    "claude-8ca596da07b766ac72c8": {
+      "provider": "cliproxyapi",
+      "routes": "Claude models through cliproxyapi (the Giver and Claude workers)",
+      "plan": "Claude Max 20x",
+      "planSource": "this machine's Claude login: subscriptionType max, rateLimitTier default_claude_max_20x, same organization as this cliproxyapi account (checked 2026-10-12; no credentials printed)",
+      "messageWindows": { "5h": 900, "weekly": null },
+      "messageWindowsSource": "Anthropic help center, 'About Claude Max plan usage', via web search summary, read 2026-10-12: at least 900 messages every 5 hours for short conversations, varying with message and conversation length. The page returned 404 on direct fetch that day. A weekly cap exists per the same summary, with no published number.",
+      "dollarEquivalent": null,
+      "allowance": "unknown: Anthropic publishes message windows, not dollars, so no USD per model exists to divide by. Needed fact: a published dollar or token equivalent of the 5-hour and weekly windows."
+    }
+  },
+  "unknown": {
+    "jev/auto and jev/free (OpenRouter free models)": {
+      "reason": "third-party guides only (read 2026-10-12): 20 requests a minute; 50 requests a day under $10 of lifetime credit purchases, 1000 a day at $10 or more. Not confirmed against OpenRouter's own docs, and these are request counts, not dollars.",
+      "needed": "OpenRouter's official rate-limit page for free models, to confirm the daily caps"
+    },
+    "jev/auto (OpenCode Zen free models)": {
+      "reason": "no official numeric limit found (read 2026-10-12). Community reports cite 200 requests per 5 hours, with 429 errors at the cap; those are not confirmed.",
+      "needed": "a published Zen free-model limit, in requests or dollars, from OpenCode's docs or dashboard"
+    }
+  },
+  "models": {
+    "claude-haiku-5-5": {
+      "monthlyUSD": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "deepseek-v4-flash": {
+      "monthlyUSD": {
+        "go": 30,
+        "go-plus": 120
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "deepseek-v4-flash-vision-exp": {
+      "monthlyUSD": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "deepseek-v4-pro": {
+      "monthlyUSD": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "deepseek-v4.1-flash": {
+      "monthlyUSD": {
+        "go": 80,
+        "go-plus": 160
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "glm-5.2": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 180
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "glm-5.3": {
+      "monthlyUSD": {
+        "go": 15,
+        "go-plus": 120
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "glm-5.3-flash": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 180
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "gpt-5.6-luna": {
+      "monthlyUSD": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "gpt-6-luna": {
+      "monthlyUSD": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "grok-4.5": {
+      "monthlyUSD": null,
+      "source": "not on the Go page read 2026-10-12; no multiplier, so list price is used"
+    },
+    "grok-4.6": {
+      "monthlyUSD": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "grok-4.7": {
+      "monthlyUSD": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "hy3": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 240
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "hy4-preview": {
+      "monthlyUSD": {
+        "go": 30,
+        "go-plus": 120
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "kimi-k2.6": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 240
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "kimi-k2.7-code": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 180
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "kimi-k3": {
+      "monthlyUSD": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "longcat-2.0": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 240
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "longcat-2.5-preview-free": {
+      "monthlyUSD": null,
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12): listed as unlimited while the promotion runs; no multiplier"
+    },
+    "mimo-v2.5": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 120
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "mimo-v2.5-pro": {
+      "monthlyUSD": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "mimo-v2.6-flash": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 120
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "mimo-v2.6-pro": {
+      "monthlyUSD": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "minimax-m2.7": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 240
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "minimax-m3": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 180
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "muse-spark-1.2-contributor": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 120
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "muse-spark-1.3-contributor": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 120
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "qwen3.6-plus": {
+      "monthlyUSD": null,
+      "source": "not on the Go page read 2026-10-12; no multiplier, so list price is used"
+    },
+    "qwen3.7-max": {
+      "monthlyUSD": null,
+      "source": "not on the Go page read 2026-10-12; no multiplier, so list price is used"
+    },
+    "qwen3.7-plus": {
+      "monthlyUSD": {
+        "go": 60,
+        "go-plus": 180
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "qwen3.8-flash": {
+      "monthlyUSD": {
+        "go": 30,
+        "go-plus": 90
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "qwen3.8-max": {
+      "monthlyUSD": {
+        "go": 15,
+        "go-plus": 60
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "space-bunny": {
+      "monthlyUSD": {
+        "go": 30,
+        "go-plus": 120
+      },
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12)"
+    },
+    "space-bunny-free": {
+      "monthlyUSD": null,
+      "source": "not on the Go page read 2026-10-12; no multiplier, so list price is used"
+    },
+    "step-5-preview-free": {
+      "monthlyUSD": null,
+      "source": "vendor docs https://dev.opencode.ai/v2/docs/console/go/ (read 2026-10-12): listed as unlimited while the promotion runs; no multiplier"
+    }
+  }
+}

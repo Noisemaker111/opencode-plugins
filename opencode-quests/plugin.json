@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "name": "opencode-quests",
+  "description": "Durable Quests, native worker dispatch, completion delivery and Quest Web APIs",
+  "server": "quest/server.ts",
+  "assets": [
+    "quest/web.ts"
+  ]
+}

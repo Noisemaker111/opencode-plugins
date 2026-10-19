@@ -1,0 +1,15 @@
+{
+  "name": "opencode-harness",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Vendor agent adapters and runtime integration",
+  "license": "MIT",
+  "exports": {
+    ".": "./harnesses/server.ts"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "1.18.23",
+    "json5": "2.2.3"
+  }
+}

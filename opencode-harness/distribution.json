@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "harnesses/server.ts",
+      "sha256": "b6f40706dc127d3f95e4f3d9de82d6d40a18cf438d5896464af01b748087cfd6"
+    },
+    {
+      "path": "models/allowance-plans.json",
+      "sha256": "7d92c7bf10cabeb48b19df5259ca185cf42be4a49dcba98baa1a8fcc35d915f9"
+    },
+    {
+      "path": "models/dispatch-policy.json",
+      "sha256": "7e1d3c43f6816b13fd56dde40f35f54313c325266acefb441652ae09fe4fc830"
+    },
+    {
+      "path": "models/model-profiles.json",
+      "sha256": "8f67ebd21667fb7605a49ad024b27adab743322a68c0e18c43961ffd97d47ff1"
+    },
+    {
+      "path": "plugin-health.ts",
+      "sha256": "d28ae6f2d05ecb552262d06d4ac032b4d23cf5303d3b4dc61830d8ecaa3600cc"
+    },
+    {
+      "path": "quest/core/durable-file.mjs",
+      "sha256": "96e9f90a4fbcb244742f9e80dd924b13ca857822f4381e6b0b78b8a04d7ef47f"
+    },
+    {
+      "path": "quest/permissions/shell-guidance.ts",
+      "sha256": "433bfbe50ce58d785143682eb96cb662378f2f79c8c625a844a03e82d64c807d"
+    },
+    {
+      "path": "scripts/shell-guard.ts",
+      "sha256": "d7b47c0f2b95084032d2e0bc01fc4095f11418342df20fe2822cfbed334b0cc8"
+    }
+  ],
+  "policy": "Relative dependencies are vendored from this source revision; no sibling checkout is required."
+}

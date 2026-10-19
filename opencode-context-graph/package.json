@@ -1,0 +1,14 @@
+{
+  "name": "opencode-context-graph",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Live session token and Code Mode attribution for server consumers",
+  "license": "MIT",
+  "exports": {
+    ".": "./context-graph/server.ts"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "1.18.23"
+  }
+}

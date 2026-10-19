@@ -1,0 +1,14 @@
+{
+  "name": "opencode-cliproxyapi",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Keeps the local CLIProxyAPI subscription broker running from its verified config",
+  "license": "MIT",
+  "exports": {
+    ".": "./cliproxyapi/server.ts"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "1.18.23"
+  }
+}

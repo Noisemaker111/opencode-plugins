@@ -1,0 +1,19 @@
+{
+  "name": "opencode-quests",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Durable Quests, native worker dispatch, completion delivery and Quest Web APIs",
+  "license": "MIT",
+  "exports": {
+    ".": "./quest/server.ts"
+  },
+  "dependencies": {
+    "effect": "4.0.5",
+    "json5": "2.2.3",
+    "gpt-tokenizer": "4.0.0",
+    "@opencode-ai/plugin": "1.18.23",
+    "ajv": "8.20.0",
+    "@modelcontextprotocol/sdk": "1.30.0"
+  }
+}

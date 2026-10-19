@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "name": "opencode-harness",
+  "description": "Vendor agent adapters and runtime integration",
+  "server": "harnesses/server.ts",
+  "assets": [
+    "models/model-profiles.json"
+  ]
+}

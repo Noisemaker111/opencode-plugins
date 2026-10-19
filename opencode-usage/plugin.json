@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "name": "opencode-usage",
+  "description": "Typed subscription usage, telemetry, and quota-aware routing APIs",
+  "server": "usage/server.ts",
+  "bin": {
+    "usage": "usage/cli.ts"
+  },
+  "assets": [
+    "usage/web-api.ts"
+  ]
+}

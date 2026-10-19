@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "name": "opencode-agent-guard",
+  "description": "Runs the agent-guard command rules on every shell call: no polling, no blind long runs, no hidden errors, no wrong-shell syntax",
+  "server": "agent-guard/server.ts",
+  "assets": []
+}

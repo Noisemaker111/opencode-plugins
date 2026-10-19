@@ -1,0 +1,14 @@
+{
+  "name": "opencode-agent-guard",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Runs the agent-guard command rules on every shell call: no polling, no blind long runs, no hidden errors, no wrong-shell syntax",
+  "license": "MIT",
+  "exports": {
+    ".": "./agent-guard/server.ts"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "1.18.23"
+  }
+}

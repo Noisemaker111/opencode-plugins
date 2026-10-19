@@ -1,0 +1,369 @@
+{
+  "version": 1,
+  "request": {
+    "task": "coding",
+    "minSuccessRate": 0.9,
+    "minTrials": 5,
+    "borrowedPriorRuns": 2,
+    "qualityTolerance": 0.02,
+    "maxUsageAgeSeconds": 120,
+    "maxEvidenceAgeDays": 30,
+    "maxBenchmarkAgeDays": 400,
+    "reserveFraction": 0,
+    "allowedRouteIDs": [
+      "proxy-sol-xhigh",
+      "proxy-sol-max",
+      "proxy-fable-high",
+      "proxy-fable-xhigh",
+      "proxy-fable-max",
+      "proxy-claude-unknown",
+      "proxy-opus-5-5-medium",
+      "proxy-opus-5-5-high",
+      "proxy-opus-5-5-xhigh",
+      "proxy-opus-5-5-max",
+      "proxy-sonnet-5-5-medium",
+      "proxy-sonnet-5-5-high",
+      "proxy-sonnet-5-5-xhigh",
+      "proxy-sonnet-5-5-max",
+      "proxy-haiku-5-5-medium",
+      "proxy-haiku-5-5-xhigh",
+      "proxy-terra-unknown",
+      "openai-astra-medium"
+    ],
+    "subscriptionConcurrency": "unlimited",
+    "missingSubscriptionUsage": "attempt",
+    "minBenchmarkPassAt1": 0.5,
+    "byTask": {
+      "planning": {
+        "qualityTolerance": 0
+      },
+      "coding": {
+        "qualityTolerance": 0.02
+      },
+      "review": {
+        "qualityTolerance": 0.1,
+        "qualitySelection": "floor"
+      },
+      "utility": {
+        "qualityTolerance": 0.2,
+        "minBenchmarkPassAt1": 0.4,
+        "qualitySelection": "floor"
+      }
+    },
+    "byDepth": {
+      "routine": {
+        "maxAllowanceShare": 0.01,
+        "maxCostWeight": 60
+      },
+      "standard": {
+        "efforts": [
+          "none",
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "maxAllowanceShare": 0.05,
+        "maxCostWeight": 800
+      },
+      "deep": {
+        "maxCapabilityGap": 0.03
+      },
+      "frontier": {
+        "maxCapabilityGap": 0.03
+      }
+    },
+    "preference": "economy",
+    "economyPriceTolerance": 0.25,
+    "judgedPool": "connected"
+  },
+  "routes": [
+    {
+      "id": "ollama-deepseek-v4-1-flash-high",
+      "accountID": "ollama-cloud-9a92d9853b1a878ae7f3",
+      "providerID": "ollama-cloud",
+      "modelID": "deepseek-v4.1-flash",
+      "harness": "native",
+      "agent": "general",
+      "reasoning": "high",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-sol-xhigh",
+      "accountID": "openai-429c9885edc3fc7113fc",
+      "providerID": "cliproxyapi",
+      "modelID": "gpt-5.6-sol",
+      "harness": "native",
+      "agent": "proxy-sol",
+      "reasoning": "xhigh",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-sol-max",
+      "accountID": "openai-429c9885edc3fc7113fc",
+      "providerID": "cliproxyapi",
+      "modelID": "gpt-5.6-sol",
+      "harness": "native",
+      "agent": "proxy-sol",
+      "reasoning": "max",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-fable-high",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-fable-5-1",
+      "harness": "native",
+      "agent": "proxy-fable",
+      "reasoning": "high",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-fable-xhigh",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-fable-5-1",
+      "harness": "native",
+      "agent": "proxy-fable",
+      "reasoning": "xhigh",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-fable-max",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-fable-5-1",
+      "harness": "native",
+      "agent": "proxy-fable",
+      "reasoning": "max",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-claude-unknown",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-opus-5",
+      "harness": "native",
+      "agent": "proxy-claude",
+      "reasoning": "unknown",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-opus-5-5-medium",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-opus-5-5",
+      "harness": "native",
+      "agent": "worker",
+      "reasoning": "medium",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-opus-5-5-high",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-opus-5-5",
+      "harness": "native",
+      "agent": "worker",
+      "reasoning": "high",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-opus-5-5-xhigh",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-opus-5-5",
+      "harness": "native",
+      "agent": "worker",
+      "reasoning": "xhigh",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-opus-5-5-max",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-opus-5-5",
+      "harness": "native",
+      "agent": "worker",
+      "reasoning": "max",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-sonnet-5-5-medium",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-sonnet-5-5",
+      "harness": "native",
+      "agent": "worker",
+      "reasoning": "medium",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-sonnet-5-5-high",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-sonnet-5-5",
+      "harness": "native",
+      "agent": "worker",
+      "reasoning": "high",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-haiku-5-5-medium",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-haiku-5-5",
+      "harness": "native",
+      "agent": "worker",
+      "reasoning": "medium",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-haiku-5-5-xhigh",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-haiku-5-5",
+      "harness": "native",
+      "agent": "worker",
+      "reasoning": "xhigh",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-sonnet-5-5-xhigh",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-sonnet-5-5",
+      "harness": "native",
+      "agent": "worker",
+      "reasoning": "xhigh",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-sonnet-5-5-max",
+      "accountID": "claude-8ca596da07b766ac72c8",
+      "providerID": "cliproxyapi",
+      "modelID": "claude-sonnet-5-5",
+      "harness": "native",
+      "agent": "worker",
+      "reasoning": "max",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "proxy-terra-unknown",
+      "accountID": "openai-429c9885edc3fc7113fc",
+      "providerID": "cliproxyapi",
+      "modelID": "gpt-5.6-terra",
+      "harness": "native",
+      "agent": "proxy-terra",
+      "reasoning": "unknown",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    },
+    {
+      "id": "openai-astra-medium",
+      "accountID": "openai-429c9885edc3fc7113fc",
+      "providerID": "openai",
+      "modelID": "gpt-6-astra",
+      "harness": "native",
+      "agent": "astra",
+      "reasoning": "medium",
+      "serviceTier": "default",
+      "verified": true,
+      "admission": "configured-choice",
+      "evidence": [],
+      "quotaPerTask": {}
+    }
+  ],
+  "billing": {
+    "ollama-cloud-9a92d9853b1a878ae7f3": "subscription",
+    "openai-429c9885edc3fc7113fc": "subscription",
+    "claude-8ca596da07b766ac72c8": "subscription",
+    "opencode-go-d9f819e2b95cc656f794": "subscription",
+    "keyless:opencode": "free"
+  },
+  "bootstrapByProject": {},
+  "sourceByProject": {},
+  "economy": {
+    "useCatalogPrices": true,
+    "comparisonTokens": {
+      "input": 8000,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "output": 1000,
+      "reasoning": 0
+    },
+    "maxPriceAgeDays": 7,
+    "minSpeedSamples": 5
+  }
+}

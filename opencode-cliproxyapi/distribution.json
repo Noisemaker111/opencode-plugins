@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "cliproxyapi/broker.ts",
+      "sha256": "a1484f46f0ab28cc9c904e80cf009947ebb97be4cb4b72e6cfaefa412c337659"
+    },
+    {
+      "path": "cliproxyapi/server.ts",
+      "sha256": "2dfdc67bba630d4619e09c77ad221e9a9c12815131be820d5cdd4f466c508a20"
+    },
+    {
+      "path": "models/allowance-plans.json",
+      "sha256": "7d92c7bf10cabeb48b19df5259ca185cf42be4a49dcba98baa1a8fcc35d915f9"
+    },
+    {
+      "path": "models/dispatch-policy.json",
+      "sha256": "7e1d3c43f6816b13fd56dde40f35f54313c325266acefb441652ae09fe4fc830"
+    },
+    {
+      "path": "models/model-profiles.json",
+      "sha256": "8f67ebd21667fb7605a49ad024b27adab743322a68c0e18c43961ffd97d47ff1"
+    },
+    {
+      "path": "models/subscription-policy.ts",
+      "sha256": "6632d80f1c4deaf3958108740a708389d95a5c51320163bfd619757eec6232ab"
+    }
+  ],
+  "policy": "Relative dependencies are vendored from this source revision; no sibling checkout is required."
+}
