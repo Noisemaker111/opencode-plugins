@@ -2,6 +2,11 @@
   "schema": 1,
   "name": "opencode-project-router",
   "description": "On-demand project discovery and destination-bound conversational routing",
+  "about": "Finds the project you meant and keeps work pointed at it. It ranks the projects it knows against your own words, offers the top few when nothing stands out, records a project under an alias, clones an authorized repository without running its scripts, and binds a Quest to the directory you chose.",
+  "needs": [
+    "an OpenCode 2 host",
+    "the quests plugin for project_goal and project_verify"
+  ],
   "server": "project-router/server.ts",
   "assets": []
 }

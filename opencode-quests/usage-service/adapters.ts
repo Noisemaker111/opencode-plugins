@@ -112,15 +112,25 @@ export function parseOllamaAccountUsage(body: any, now: number): Observation {
   }
   return { windows, plan: typeof body.plan === "string" ? { name: body.plan, rateLimitTier: null, multiplier: null, provenance: "provider-observed", observedAt: new Date(now).toISOString() } : undefined }
 }
+export function parseCursorUsage(body: any, now: number): Observation {
+  const start = iso(body.billingCycleStart), end = iso(body.billingCycleEnd)
+  const plan = body.individualUsage?.plan
+  const used = num(plan?.used), limit = num(plan?.limit)
+  const percent = pct(plan?.totalPercentUsed) ?? (used != null && limit ? Math.round(Math.min(100, used / limit * 100) * 10) / 10 : null)
+  const seconds = start && end ? Math.round((Date.parse(end) - Date.parse(start)) / 86400_000) * 86400 : null
+  const windows: AccountWindow[] = percent == null && body.isUnlimited !== true ? [] : [window("pool", { used_percent: body.isUnlimited === true ? 0 : percent, reset_at: end }, now, "shared", seconds)]
+  return { windows, plan: typeof body.membershipType === "string" ? { name: body.membershipType, rateLimitTier: null, multiplier: null, provenance: "provider-observed", observedAt: new Date(now).toISOString() } : undefined }
+}
+const cursorUser = (token: string) => { try { return String(JSON.parse(Buffer.from(token.split(".")[1], "base64url").toString()).sub ?? "").split("|").pop() || undefined } catch { return undefined } }
 export async function probeConnection(connection: Connection, opts: { now: () => number; fetch: typeof fetch; refreshPlan: boolean }): Promise<Observation | ProbeFailure> {
-  if (connection.provider === "cursor") return { state: "unsupported", error: "Cursor subscription connected; individual usage is available in Cursor's Spending dashboard, but Cursor exposes no documented individual usage API." }
-  if (connection.provider === "grok") return { state: "unsupported", error: "Connected account discovered; no verified Grok subscription-usage adapter." }
+  if (connection.provider === "grok") return { state: "unsupported", error: "Grok shares the X Subscription pool, which the Grok and Cursor account shows." }
   const url = connection.provider === "openai" ? "https://chatgpt.com/backend-api/wham/usage" :
     connection.provider === "claude" ? "https://api.anthropic.com/api/oauth/usage" :
-    connection.provider === "ollama-cloud" ? "https://ollama.com/api/usage" : "https://opencode.ai/zen/go/v1/usage"
+    connection.provider === "ollama-cloud" ? "https://ollama.com/api/usage" : connection.provider === "cursor" ? "https://cursor.com/api/usage-summary" : "https://opencode.ai/zen/go/v1/usage"
   const token = connection.token()
   if (!token) return { state: "auth-required", error: "Credential unavailable; refresh through its existing owner." }
-  const headers: Record<string, string> = { Authorization: "Bearer " + token, Accept: "application/json" }
+  const headers: Record<string, string> = connection.provider === "cursor" ? { Cookie: "WorkosCursorSessionToken=" + encodeURIComponent((cursorUser(token) ?? "") + "::" + token), Accept: "application/json", "User-Agent": "Mozilla/5.0" } : { Authorization: "Bearer " + token, Accept: "application/json" }
+  if (connection.provider === "cursor" && !cursorUser(token)) return { state: "auth-required", error: "Cursor sign-in unreadable; run cursor-agent login." }
   if (connection.provider === "openai") {
     if (!connection.upstreamAccountID) return { state: "auth-required", error: "OAuth account identity unavailable; refresh through its existing owner." }
     headers["ChatGPT-Account-Id"] = connection.upstreamAccountID
@@ -134,7 +144,7 @@ export async function probeConnection(connection: Connection, opts: { now: () =>
       const seconds = retry ? Number(retry) : NaN
       const retryAfterSeconds = Number.isFinite(seconds) ? Math.min(300, Math.max(0, seconds)) : retry && Number.isFinite(Date.parse(retry)) ? Math.min(300, Math.max(0, (Date.parse(retry) - opts.now()) / 1000)) : undefined
       return { state: response.status === 401 || response.status === 403 ? "auth-required" : "unknown",
-        error: "Usage endpoint HTTP " + response.status + (response.status === 401 || response.status === 403 ? "; refresh through the existing credential owner." : ""),
+        error: "Usage endpoint HTTP " + response.status + (response.status === 401 || response.status === 403 ? (connection.provider === "cursor" ? "; the Cursor sign-in expired: run cursor-agent login." : "; refresh through the existing credential owner.") : ""),
         retryAfterSeconds }
     }
     const body = await response.json() as any
@@ -142,7 +152,7 @@ export async function probeConnection(connection: Connection, opts: { now: () =>
     if (connection.provider === "openai" && typeof body.account_id === "string" && body.account_id !== connection.upstreamAccountID) return { state: "unknown", error: "Usage response account identity does not match the selected connection." }
     const now = opts.now()
     const observation = connection.provider === "openai" ? parseOpenAIAccountUsage(body, now) : connection.provider === "claude" ? parseClaudeAccountUsage(body, now) :
-      connection.provider === "ollama-cloud" ? parseOllamaAccountUsage(body, now) : parseGoAccountUsage(body, now)
+      connection.provider === "ollama-cloud" ? parseOllamaAccountUsage(body, now) : connection.provider === "cursor" ? parseCursorUsage(body, now) : parseGoAccountUsage(body, now)
     if (!observation.windows.length) return { state: "unknown", error: "Usage endpoint returned no recognized windows." }
     if (connection.provider === "claude" && opts.refreshPlan) {
       try {

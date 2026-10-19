@@ -75,7 +75,7 @@
     },
     {
       "path": "models/live-routes.ts",
-      "sha256": "1c938c770ee30d7161137cbfa742b84f62fed1d024b5211c3280f39c11c341d2"
+      "sha256": "22993888dd56ccb6bcc5055b125e31b7d17abd155beef775edf0d3f061c5226b"
     },
     {
       "path": "models/measured-outcomes.ts",
@@ -955,23 +955,27 @@
     },
     {
       "path": "usage-service/accounts.ts",
-      "sha256": "b690bcfc7e3e6be3562f05152a6794cd0507f4e455302f4d7a4b6fdc5cc76f24"
+      "sha256": "dbf4fe6b90edc71078902cbc1115ae110abe3e6e5b72d504f9ca86c306725b2e"
     },
     {
       "path": "usage-service/adapters.ts",
-      "sha256": "e6a7e83ac4c89f4e06659ba3f75081a2b96c7d3b8a8f29081fed13557fcc29f4"
+      "sha256": "678010c02eb76178cb127941bf7cb414c14d9079ff8112e06eafb468a3584d3c"
     },
     {
       "path": "usage-service/backend.ts",
-      "sha256": "e08cb0290d963d11657b41046e08b5520be0144edb9727404bd56a0bfc9947a4"
+      "sha256": "7ba063461924e5e625b9401376711566bd236c77616d233459eff2a1284fbbbf"
+    },
+    {
+      "path": "usage-service/broker-login.ts",
+      "sha256": "4c18e35773059373755d50e89f5ac0d7fc308a8c127cc4b11c5a8cc0d16cfb32"
     },
     {
       "path": "usage-service/computer.ts",
-      "sha256": "130e9d9e34d5175aa8d258fc00fb07894a152126af220c09a1765e4a4b889dbc"
+      "sha256": "debc559f31c3a174b94912cba3377f42ed4ad2e6490bed17fd1aa13a90b187f5"
     },
     {
       "path": "usage-service/connections.ts",
-      "sha256": "5de5f8f9f935f55df31e8c777b908b971a7d18faf38c246db9bc0b945efb7e5f"
+      "sha256": "2171927972a00500b9617190336c5b544b3ff853e5b6868645e84b63ac409b98"
     },
     {
       "path": "usage-service/describe.ts",
@@ -999,7 +1003,7 @@
     },
     {
       "path": "usage-service/local.ts",
-      "sha256": "5bf71932b05303222e30789c8cef97e68c333f22f963fe0c8a5ed079f43c37c8"
+      "sha256": "4d2ef8a87cecd7d1e0a4b9818b1f30df98b4ab2fa74be40d5943373ca1ee141c"
     },
     {
       "path": "usage-service/mcp.ts",
@@ -1011,7 +1015,7 @@
     },
     {
       "path": "usage-service/providers.ts",
-      "sha256": "dbb83eac190ad9c467da2ae7fb5f4cf95a2d56d19dad37c389890e1b412fb252"
+      "sha256": "d69fd0406c0a869d2be0efd44532094496222e1d34955946d3bf51dcac95af08"
     },
     {
       "path": "usage-service/proxy-owners.ts",
@@ -1023,7 +1027,7 @@
     },
     {
       "path": "usage-service/remote.ts",
-      "sha256": "26aeb4b64fb5b53aafca5bdaddaa03465bcd92c442c7e42154b1ff9a3b7cabca"
+      "sha256": "1ed71da63d7bd123b8852caeaf1d1ec7ae7e416b9a41d90a9442d596ddf4f191"
     },
     {
       "path": "usage-service/scopes.ts",
@@ -1035,7 +1039,7 @@
     },
     {
       "path": "usage-service/store.ts",
-      "sha256": "d9ab7507884ca64a565ecdbc2e13747549f4d8d348e76cb1f0136810c67026f1"
+      "sha256": "e458a4992a772ef27f477fdfbde7fe65522313f6febbcd5e5606e079c6b3e627"
     },
     {
       "path": "usage-service/types.ts",

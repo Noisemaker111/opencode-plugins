@@ -32,7 +32,7 @@ export async function computerRoute(backend: LocalBackend, method: string, path:
     if (route === computerPaths.start) {
       const provider = body.provider
       if (typeof provider !== "string" || !catalogEntry(provider)) return refuse(400, "INVALID_INPUT", "provider must be a known provider.")
-      return { status: 200, body: await backend.connectStart(provider as UsageProvider) }
+      return { status: 200, body: await backend.connectStart(provider as UsageProvider, { another: body.another === true }) }
     }
     if (route === computerPaths.key) {
       if (typeof body.id !== "string" || typeof body.key !== "string") return refuse(400, "INVALID_INPUT", "id and key are required.")

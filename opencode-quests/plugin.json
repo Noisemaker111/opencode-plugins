@@ -2,6 +2,12 @@
   "schema": 1,
   "name": "opencode-quests",
   "description": "Durable Quests, native worker dispatch, completion delivery and Quest Web APIs",
+  "about": "Turns a stated goal into a stored Quest: title, steps, a chosen project, a worker run, completion delivery and verification evidence. It adds the Quest tools and Quest Web API, the giver session, worker admission and checkouts, and keeps the record on disk so a later session can resume it.",
+  "needs": [
+    "an OpenCode 2 host",
+    "one git checkout per project it works in",
+    "the models plugin for routed worker runs"
+  ],
   "server": "quest/server.ts",
   "assets": [
     "quest/web.ts"

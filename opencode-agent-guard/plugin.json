@@ -2,6 +2,11 @@
   "schema": 1,
   "name": "opencode-agent-guard",
   "description": "Runs the agent-guard command rules on every shell call: no polling, no blind long runs, no hidden errors, no wrong-shell syntax",
+  "about": "Applies your own agent-guard command rules to every shell call, and installs the search-output helper that keeps large result sets readable. Without the external agent-guard package it loads only the helper.",
+  "needs": [
+    "an OpenCode 2 host",
+    "the agent-guard package on disk, at AGENT_GUARD_HOME or ~/Projects/agent-guard"
+  ],
   "server": "agent-guard/server.ts",
   "assets": []
 }

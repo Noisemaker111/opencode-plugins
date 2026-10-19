@@ -2,6 +2,10 @@
   "schema": 1,
   "name": "opencode-harness",
   "description": "Vendor agent adapters and runtime integration",
+  "about": "Keeps shell calls honest. It refuses polling loops, destructive git, commands written in the wrong shell and blind long runs before they execute, and it shortens huge tool output while saving the full text under logs/. It adds no tools of its own; it only tightens the ones you already have.",
+  "needs": [
+    "an OpenCode 2 host"
+  ],
   "server": "harnesses/server.ts",
   "assets": [
     "models/model-profiles.json"

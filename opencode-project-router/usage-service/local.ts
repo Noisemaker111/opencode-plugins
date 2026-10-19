@@ -1,10 +1,12 @@
 import { randomUUID } from "node:crypto"
+import { join } from "node:path"
+import { BROKER_LOGIN_FLAGS, startBrokerLogin, type BrokerLogin } from "./broker-login"
 import { probeConnection } from "./adapters"
 import { UsageError, type Backend, type Capabilities, type ConnectStart, type ConnectStatus, type Disconnected } from "./backend"
 import type { Connection } from "./connections"
-import { discoveryPaths, type DiscoveryPaths } from "./connections"
+import { discoveryPaths, opaqueAccountID, type DiscoveryPaths } from "./connections"
 import { catalogEntry, providerCatalog, type ConnectKind, type ProviderEntry } from "./providers"
-import { ignoreAccount, removeKey, saveKey, unignoreProvider } from "./store"
+import { ignoreAccount, keyIdentity, readStore, removeKey, saveKey, unignoreProvider } from "./store"
 import type { AccountUsage, UsageProvider } from "./types"
 import type { ReadAccount } from "./views"
 
@@ -24,6 +26,7 @@ export type LocalOptions = {
   fetch?: typeof fetch
   now?: () => number
   newID?: () => string
+  brokerLogin?: (provider: UsageProvider) => Promise<BrokerLogin | undefined>
 }
 
 type Attempt = {
@@ -39,7 +42,7 @@ export const ATTEMPT_MS = 15 * 60_000
 const MAX_ATTEMPTS = 20
 
 export type LocalBackend = Backend & {
-  connectStart(provider: UsageProvider): Promise<ConnectStart>
+  connectStart(provider: UsageProvider, options?: { another?: boolean }): Promise<ConnectStart>
   connectStatus(id: string): Promise<ConnectStatus>
   disconnect(account: string): Promise<Disconnected>
   submitKey(id: string, key: string): Promise<ConnectStatus>
@@ -71,7 +74,9 @@ export function localBackend(options: LocalOptions): LocalBackend {
     tokenHome: entry.tokenHome, expiresAt: new Date(now() + ATTEMPT_MS).toISOString(),
   })
 
-  async function connectStart(provider: UsageProvider): Promise<ConnectStart> {
+  const brokerLogin = options.brokerLogin ?? ((provider: UsageProvider) => startBrokerLogin(provider, join(paths.config, "cliproxyapi", "config.localhost.yaml")))
+
+  async function connectStart(provider: UsageProvider, start: { another?: boolean } = {}): Promise<ConnectStart> {
     const entry = catalogEntry(provider)
     if (!entry) throw new UsageError("UNKNOWN_PROVIDER", "Usage does not know that provider.")
     unignoreProvider(paths.usage, provider)
@@ -79,6 +84,20 @@ export function localBackend(options: LocalOptions): LocalBackend {
     const id = newID()
     const expiresAt = now() + ATTEMPT_MS
     const kind = kindFor(entry)
+    if (start.another && BROKER_LOGIN_FLAGS[provider]) {
+      const login = await brokerLogin(provider).catch(() => undefined)
+      if (login) {
+        const linkKind: ConnectKind = login.code ? "device-code" : "browser-link"
+        remember(id, { provider, kind: linkKind, before, expiresAt })
+        return {
+          id, provider, name: entry.name, kind: linkKind, readsUsage: entry.readsUsage, url: login.url, ...(login.code ? { code: login.code } : {}),
+          steps: login.code
+            ? [`Open the link and sign in to the other ${entry.name} account.`, "Enter the code shown below when the page asks for it.", "Then check connect_status; CLIProxy adds the account beside the ones it holds."]
+            : [`Open the link in a browser on the computer Usage reads and sign in to the other ${entry.name} account.`, "Then check connect_status; CLIProxy adds the account beside the ones it holds."],
+          tokenHome: "a new account file in CLIProxy's folder on this computer; never sent to the hosted service", expiresAt: new Date(expiresAt).toISOString(),
+        }
+      }
+    }
     if (kind === "key-form") {
       remember(id, { provider, kind, before, expiresAt })
       return {
@@ -154,7 +173,8 @@ export function localBackend(options: LocalOptions): LocalBackend {
     if (found.length > 1) throw new UsageError("AMBIGUOUS_ACCOUNT", "More than one account matches that. Use the full id from plans.")
     const target = found[0]
     const owners = [...new Set(target.connections.map(connection => connection.owner))]
-    const removedKey = owners.includes("usage") ? removeKey(paths.usage, target.provider) : false
+    const held = readStore(paths.usage).keys.find(row => row.provider === target.provider && opaqueAccountID(row.provider, keyIdentity(row.apiKey)) === target.id)
+    const removedKey = owners.includes("usage") && held ? removeKey(paths.usage, target.provider, keyIdentity(held.apiKey)) : false
     const others = owners.filter(owner => owner !== "usage")
     if (others.length) ignoreAccount(paths.usage, target.id)
     const signOut = others.length ? catalogEntry(target.provider)?.signOut ?? null : null

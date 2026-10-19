@@ -1,12 +1,13 @@
 import { chmodSync, existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs"
 import { dirname } from "node:path"
-import { randomUUID } from "node:crypto"
+import { createHash, randomUUID } from "node:crypto"
 import type { UsageProvider } from "./types"
 
 export const CONNECTIONS_BUDGET_BYTES = 64 * 1024
 const MAX_KEYS = 20, MAX_IGNORED = 50, MAX_KEY_LENGTH = 512
 
 export type StoredKey = { provider: UsageProvider; apiKey: string; addedAt: string }
+export const keyIdentity = (apiKey: string) => "usage:" + createHash("sha256").update(apiKey.trim()).digest("hex").slice(0, 20)
 export type Store = { schema: 1; keys: StoredKey[]; ignored: string[] }
 const empty = (): Store => ({ schema: 1, keys: [], ignored: [] })
 
@@ -37,12 +38,12 @@ export function saveKey(file: string, provider: UsageProvider, apiKey: string, n
   const key = apiKey.trim()
   if (!key || key.length > MAX_KEY_LENGTH || /\s/.test(key)) throw new Error("That is not a usable key.")
   const store = readStrict(file)
-  writeStore(file, { ...store, keys: [...store.keys.filter(row => row.provider !== provider), { provider, apiKey: key, addedAt: now.toISOString() }], ignored: store.ignored })
+  writeStore(file, { ...store, keys: [...store.keys.filter(row => !(row.provider === provider && row.apiKey === key)), { provider, apiKey: key, addedAt: now.toISOString() }], ignored: store.ignored })
 }
 
-export function removeKey(file: string, provider: UsageProvider): boolean {
+export function removeKey(file: string, provider: UsageProvider, identity?: string): boolean {
   const store = readStrict(file)
-  const keys = store.keys.filter(row => row.provider !== provider)
+  const keys = store.keys.filter(row => row.provider !== provider || identity !== undefined && keyIdentity(row.apiKey) !== identity)
   if (keys.length === store.keys.length) return false
   writeStore(file, { ...store, keys })
   return true

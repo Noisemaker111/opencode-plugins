@@ -2,6 +2,14 @@
 
 Vendor agent adapters and runtime integration.
 
+## What it does
+
+Keeps shell calls honest. It refuses polling loops, destructive git, commands written in the wrong shell and blind long runs before they execute, and it shortens huge tool output while saving the full text under logs/. It adds no tools of its own; it only tightens the ones you already have.
+
+## What it needs
+
+- an OpenCode 2 host
+
 ## Install
 
 Run `bun install` in this directory once, then add this directory's absolute
@@ -13,12 +21,13 @@ Use the package through your OpenCode2 server, then inspect the saved result
 after reopening. The builder checks entrypoint bundling; that does not prove
 product behavior.
 
-## Ownership
+## Files
 
-`plugin.json` declares entrypoints and runtime assets. `distribution.json`
-records every shipped source and its hash. Relative dependencies are vendored
-from the same source revision; no sibling repository layout is assumed.
-The maintained source is the owner's directory in the QuestGiver repository;
+`plugin.json` declares entrypoints, runtime assets, what the package does and
+what it needs. `distribution.json` records every shipped source and its hash.
+Relative dependencies are vendored from the same source revision; no sibling
+repository layout is assumed. The maintained source is the owner's directory in
+the QuestGiver repository;
 [opencode-plugins](https://github.com/Noisemaker111/opencode-plugins) publishes
 releases of these packages.
 

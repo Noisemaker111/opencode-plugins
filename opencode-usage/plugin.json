@@ -2,6 +2,11 @@
   "schema": 1,
   "name": "opencode-usage",
   "description": "Typed subscription usage, telemetry, and quota-aware routing APIs",
+  "about": "Tells you what your subscriptions have left. It reads the accounts your host already uses and reports observed quota windows, burn rate, forecast to a deadline, per-session history and token/cost telemetry through the usage_status, usage_experience, usage_pacing and usage_target tools, a usage CLI and a stdio MCP server. It starts no background collector.",
+  "needs": [
+    "an OpenCode 2 host",
+    "the provider accounts and their local sign-in or auth files"
+  ],
   "server": "usage/server.ts",
   "bin": {
     "usage": "usage/cli.ts"

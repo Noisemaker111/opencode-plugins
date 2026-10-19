@@ -2,6 +2,13 @@
   "schema": 1,
   "name": "opencode-models",
   "description": "Model routing, account policy and configured transport guards",
+  "about": "Guards which models a session may run. It blocks unlisted providers and models for task and subagent spawns, refuses a mid-session model switch that breaks the access policy, serves the configured model list and instruction files, and starts the local jev bridge that answers judge and permission questions on a free or paid route.",
+  "needs": [
+    "an OpenCode 2 host",
+    "provider entries in opencode.jsonc",
+    "the accounts in auth.json that it guards",
+    "an OpenRouter key in auth.json only for the paid jev route"
+  ],
   "server": "models/server.ts",
   "assets": [
     "models/model-profiles.json",

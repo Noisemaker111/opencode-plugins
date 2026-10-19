@@ -2,6 +2,11 @@
   "schema": 1,
   "name": "opencode-cliproxyapi",
   "description": "Keeps the local CLIProxyAPI subscription broker running from its verified config",
+  "about": "Runs the local CLIProxyAPI broker for the subscription plans that need it. When a broker config exists it starts the broker and brings it back on demand if a request targets its address. It adds no tools.",
+  "needs": [
+    "an OpenCode 2 host",
+    "a CLIProxyAPI broker config file"
+  ],
   "server": "cliproxyapi/server.ts",
   "assets": []
 }

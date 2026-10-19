@@ -43,8 +43,8 @@ export function remoteBackend(call: Call, origin: string): Backend {
       const body = await ok<ReadAccount[] | { accounts?: ReadAccount[] }>("GET", computerPaths.accounts)
       return Array.isArray(body) ? body : body.accounts ?? []
     },
-    async connectStart(provider) {
-      const start = await ok<ConnectStart>("POST", computerPaths.start, { provider })
+    async connectStart(provider, options) {
+      const start = await ok<ConnectStart>("POST", computerPaths.start, { provider, ...(options?.another ? { another: true } : {}) })
       const { formPath, ...rest } = start
       return formPath ? { ...rest, url: origin + formPath } : start
     },

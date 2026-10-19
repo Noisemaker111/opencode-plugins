@@ -4,7 +4,7 @@ import { homedir } from "node:os"
 import { join } from "node:path"
 import { execFile } from "node:child_process"
 import type { AccountPlan, PublicConnection, UsageProvider } from "./types"
-import { readStore } from "./store"
+import { keyIdentity, readStore } from "./store"
 
 export type Connection = PublicConnection & {
   provider: UsageProvider
@@ -135,7 +135,8 @@ export function discoverConnections(paths = discoveryPaths()): { connections: Co
   const stored = readStore(paths.usage)
   for (const row of stored.keys) {
     const provider = row.provider
-    add("usage", paths.usage, provider, { apiKey: row.apiKey }, () => ({ apiKey: readStore(paths.usage).keys.find(key => key.provider === provider)?.apiKey }), { identityKey: "usage:" + hash(row.apiKey) })
+    const identity = keyIdentity(row.apiKey)
+    add("usage", paths.usage, provider, { apiKey: row.apiKey }, () => ({ apiKey: readStore(paths.usage).keys.find(key => key.provider === provider && keyIdentity(key.apiKey) === identity)?.apiKey }), { identityKey: identity })
   }
   return { connections: connections.filter(connection => !stored.ignored.includes(connection.accountID)), diagnostics }
 }
@@ -161,27 +162,28 @@ export async function discoverCursorConnection(paths = discoveryPaths(), now: ()
     const { settled, ...result } = await held.reading
     if (settled) return { ...result, diagnostics: [...result.diagnostics, "cursor: sign-in state is the cursor-agent status read at " + new Date(held.at).toISOString() + " (" + Math.max(0, Math.round((now() - held.at) / 1000)) + " s before this refresh); its credentials have not changed since"] }
   }
-  const reading = { key, at: now(), reading: readCursorStatus(command, environment) }
+  const reading = { key, at: now(), reading: readCursorStatus(command, environment, credentials) }
   readings.set(command, reading)
   const { settled, ...result } = await reading.reading
   if (!settled && readings.get(command) === reading) readings.delete(command)
   return result
 }
 
-async function readCursorStatus(command: string, environment: NodeJS.ProcessEnv): Promise<Discovered & { settled: boolean }> {
+async function readCursorStatus(command: string, environment: NodeJS.ProcessEnv, credentials: string): Promise<Discovered & { settled: boolean }> {
   try {
     const stdout = await new Promise<string>((resolve, reject) =>
       execFile(process.platform === "win32" ? '"' + command + '"' : command, ["status", "--format", "json"], { encoding: "utf8", timeout: 5000, windowsHide: true, env: environment, shell: process.platform === "win32" },
         (error, out) => (error ? reject(error) : resolve(out))))
     const status = JSON.parse(stdout)
-    const userID = str(status?.userInfo?.userId) ?? (Number.isFinite(status?.userInfo?.userId) ? String(status.userInfo.userId) : undefined)
+    const signedIn = (() => { try { return str(String(jwt(json(credentials).accessToken)?.sub ?? "").split("|").pop()) } catch { return undefined } })()
+    const userID = str(status?.userInfo?.userId) ?? (Number.isFinite(status?.userInfo?.userId) ? String(status.userInfo.userId) : undefined) ?? signedIn
     if (status?.isAuthenticated !== true || !userID) return { connections: [], diagnostics: [], settled: true }
     return {
       settled: true,
       connections: [{
         id: "connection-" + hash("cursor:" + userID), accountID: opaqueAccountID("cursor", userID), identity: "account",
         owner: "cursor", provider: "cursor", plan: unknownPlan(), routeProviders: ["cursor"], modelPrefix: null,
-        token: () => undefined,
+        token: () => { try { return str(json(credentials).accessToken) } catch { return undefined } },
       }],
       diagnostics: [],
     }

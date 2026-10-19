@@ -174,9 +174,10 @@ export function deriveBenchmarkRoutes(input: { catalog: CatalogModel[]; table: B
     if (model.deprecated) { note(model.providerID + "/" + model.modelID + ": the catalog marks this model deprecated, so it derives no route"); continue }
     try { assertConfiguredModel({ providerID: model.providerID, id: model.modelID }, access) } catch { continue }
     const accounts = accountsForRoute(snapshot, model.providerID, model.modelID)
-    if (accounts.length > 1) { note(model.providerID + "/" + model.modelID + ": several connected accounts serve this identity"); continue }
+    const serving = accounts.length > 1 ? [...accounts].sort((a, b) => Number(a.state !== "available") - Number(b.state !== "available") || a.id.localeCompare(b.id)) : accounts
+    if (serving.length > 1) note(model.providerID + "/" + model.modelID + ": " + serving.length + " connected accounts serve this identity; it routes on " + serving[0].id + " while that account has capacity")
     const keyless = keylessAccountID(model.providerID)
-    const accountID = accounts[0]?.id ?? (policy.billing[keyless] ? keyless : undefined)
+    const accountID = serving[0]?.id ?? (policy.billing[keyless] ? keyless : undefined)
     if (!accountID) continue
     if (!policy.billing[accountID]) { note(model.providerID + "/" + model.modelID + ": billing arrangement for " + accountID + " is not configured"); continue }
     const entry = benchmarkFor(table, model.modelID)

@@ -323,6 +323,7 @@ export function formatAccountUsage(snapshot: AccountSnapshot, now = Date.now()):
 
 export function accountsForRoute(snapshot: AccountSnapshot, providerID: string, modelID: string): AccountUsage[] {
   return snapshot.accounts.filter(account => account.connections.some(connection => {
+    if (connection.owner === "usage") return false
     if (!connection.routeProviders.includes(providerID)) return false
     if (connection.modelPrefix && !modelID.startsWith(connection.modelPrefix + "/")) return false
     const model = connection.modelPrefix ? modelID.slice(connection.modelPrefix.length + 1) : modelID

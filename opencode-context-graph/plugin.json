@@ -2,6 +2,10 @@
   "schema": 1,
   "name": "opencode-context-graph",
   "description": "Live session token and Code Mode attribution for server consumers",
+  "about": "Times the inner calls of Code Mode programs. When an execute call is slow, the recorded spans name the call that took the time instead of blaming the whole program. It adds no tools.",
+  "needs": [
+    "an OpenCode 2 host"
+  ],
   "server": "context-graph/server.ts",
   "assets": [
     "context-graph/context-graph.ts",

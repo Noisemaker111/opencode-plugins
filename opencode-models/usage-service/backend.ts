@@ -52,7 +52,7 @@ export type Disconnected = {
 export type Backend = {
   capabilities(): Promise<Capabilities>
   accounts(): Promise<ReadAccount[]>
-  connectStart?(provider: UsageProvider): Promise<ConnectStart>
+  connectStart?(provider: UsageProvider, options?: { another?: boolean }): Promise<ConnectStart>
   connectStatus?(id: string): Promise<ConnectStatus>
   disconnect?(account: string): Promise<Disconnected>
 }

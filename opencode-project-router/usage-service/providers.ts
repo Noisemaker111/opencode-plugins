@@ -48,11 +48,11 @@ export const providerCatalog: ProviderEntry[] = [
     tokenHome: ".config/usage/connections.json on this computer; the key passes through the hosted relay once and is not kept there",
   },
   {
-    provider: "cursor", name: "Cursor", readsUsage: false, kind: "local-command",
+    provider: "cursor", name: "Grok and Cursor (X Subscription)", readsUsage: true, kind: "local-command",
     command: "cursor-agent login",
     signOut: "cursor-agent logout",
     where: "Cursor's own sign-in in a browser on the computer that runs the command",
-    tokenHome: "Cursor's own files on this computer; Usage reads only whether you are signed in",
+    tokenHome: "Cursor's own sign-in file on this computer; Usage sends it only to cursor.com to read the shared Grok and Cursor pool",
   },
   {
     provider: "grok", name: "Grok (xAI)", readsUsage: false, kind: "browser-link",
@@ -60,7 +60,7 @@ export const providerCatalog: ProviderEntry[] = [
     command: "opencode auth login",
     signOut: "opencode auth logout",
     where: "a sign-in page that returns to this computer, so the browser must be on the same computer",
-    tokenHome: "the OpenCode sign-in store on this computer; Usage reads only whether you are signed in",
+    tokenHome: "the OpenCode sign-in store on this computer; Grok usage is the shared X Subscription pool on the Grok and Cursor account",
   },
 ]
 
